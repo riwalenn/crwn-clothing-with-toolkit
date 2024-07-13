@@ -26,3 +26,7 @@ yarn-error.log*
 /package-lock.json
 /.idea/php.xml
 /.idea/vcs.xml
+/.env
+
+# Local Netlify folder
+.netlify
