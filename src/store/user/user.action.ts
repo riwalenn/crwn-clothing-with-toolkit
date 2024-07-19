@@ -1,7 +1,7 @@
 import { USER_ACTION_TYPES } from './user.types';
 import { createAction, withmatcher, Action, ActionWithPayload } from '../../utils/reducer/reducer.utils';
 import { UserData, AdditionalInformation } from "../../utils/firebase/firebase.utils";
-import {User} from "firebase/auth";
+import { User } from "firebase/auth";
 
 export type CheckUserSession = Action<USER_ACTION_TYPES.CHECK_USER_SESSION>;
 
@@ -17,7 +17,7 @@ export type SignInSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_SUCCESS,
 
 export type SignInFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_IN_FAILED, Error>;
 
-export type SignUpSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user: UserData, additionalDetails: AdditionalInformation}>;
+export type SignUpSuccess = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user: User, additionalDetails: AdditionalInformation}>;
 
 export type SignUpFailed = ActionWithPayload<USER_ACTION_TYPES.SIGN_UP_FAILED, Error>;
 
@@ -39,7 +39,7 @@ export const googleSignInStart = withmatcher((): GoogleSignInStart =>
 export const emailSignInStart = withmatcher((email: string, password: string): EmailSignInStart =>
   createAction(USER_ACTION_TYPES.EMAIL_SIGN_IN_START, { email, password }));
 
-export const signInSuccess = withmatcher((user: UserData): SignInSuccess =>
+export const signInSuccess = withmatcher((user: UserData & { id: string }): SignInSuccess =>
   createAction(USER_ACTION_TYPES.SIGN_IN_SUCCESS, user));
 
 export const signInFailed = withmatcher((error): SignInFailed =>
@@ -52,7 +52,7 @@ export const signUpStart = withmatcher((email: string, password: string, display
     displayName,
   }));
 
-export const signUpSuccess = withmatcher((user: UserData, additionalDetails: AdditionalInformation): SignUpSuccess =>
+export const signUpSuccess = withmatcher((user: User, additionalDetails: AdditionalInformation): SignUpSuccess =>
   createAction(USER_ACTION_TYPES.SIGN_UP_SUCCESS, { user, additionalDetails }));
 
 export const signUpFailed = withmatcher((error): SignUpFailed =>
